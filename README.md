@@ -1,6 +1,6 @@
 # cdk_sample
 
-cdk를 이용해 ECS Fargate로 
+cdk를 이용해 ECS Fargate 서비스를 구축하고 부하 테스트를 해보는 샘플 프로젝트입니다. 상세한 내용은 하단의 링크를 참고하세요.
 
 ## 파일 설명
 <pre>
