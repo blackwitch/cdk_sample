@@ -1,4 +1,4 @@
-# cdk_sample
+# CDK typescript sample
 
 cdk를 이용해 ECS Fargate 서비스를 구축하고 부하 테스트를 해보는 샘플 프로젝트입니다. 
 
