@@ -11,22 +11,20 @@ export class HelloStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const vpc = this.build_VPC('Hello'); // VPC 생성
-  	if(vpc != null){
-        const sg = this.build_SecurityGroup(vpc);//  보안 그룹 생성
-        this.build_ecs(vpc, sg);
+    const vpc = this.build_VPC('Hello'); // VPC 생성 , 생성되어 있다면 생성되어 있던 VPC 정보를 반환
+    const sg = this.build_SecurityGroup(vpc);//  보안 그룹 생성
+    this.build_ecs(vpc, sg);
 
-  	    // secret manager를 생성, 로그인 시 secret manager 에서 생성
-        credsSecretName의  arn을 복사해서 로그인 가능
-        const instanceIdentifier = 'mysql-01'
-        const credsSecretName = `/${id}/rds/creds/${instanceIdentifier}`.toLowerCase()
-        const creds = new DatabaseSecret(this, 'hello-rdb-credentials', {
-          secretName: credsSecretName,
-          username: 'admin'
-        });
-        // mysqls serverless v1으로 생성
-        this.build_rdb_serverless(vpc, creds)
-    }
+    // secret manager를 생성, 로그인 시 secret manager 에서 생성
+    credsSecretName의  arn을 복사해서 로그인 가능
+    const instanceIdentifier = 'mysql-01'
+    const credsSecretName = `/${id}/rds/creds/${instanceIdentifier}`.toLowerCase()
+    const creds = new DatabaseSecret(this, 'hello-rdb-credentials', {
+      secretName: credsSecretName,
+      username: 'admin'
+    });
+    // mysqls serverless v1으로 생성
+    this.build_rdb_serverless(vpc, creds)
   }
 
   get availabilityZones(): string[] {
