@@ -11,7 +11,13 @@ export class HelloStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const vpc = this.build_VPC('Hello'); // VPC 생성 , 생성되어 있다면 생성되어 있던 VPC 정보를 반환
+    const ddb_main = new dynamodb.Table(this, "ddb_table", {
+      partitionKey: {name: "id", type:dynamodb.AttributeType.STRING},
+      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      tableName : "sampleTable"
+    });
+  
+    const vpc = this.build_VPC('Hello'); // VPC 생성 , 생성되어 있다면 기존 VPC 정보를 반환
     if(vpc){
       const sg = this.build_SecurityGroup(vpc);//  보안 그룹 생성
       this.build_ecs(vpc, sg);
